@@ -2,7 +2,6 @@ use cursive::{Vec2, XY };
 use std::collections::LinkedList;
 
 use rand::{thread_rng, Rng, rngs::ThreadRng};
-// use std::cmp::max;
 
 pub struct Game {
     pub size: Vec2,
@@ -45,8 +44,6 @@ impl Game {
       }
 
       self.snake.push_front(next_head);
-      println!("next head x = {}, y = {}", next_head.x, next_head.y);
-      println!("apple x = {}, y = {}", self.apple.x, self.apple.y);
 
       if (next_head.x != self.apple.x) || (next_head.y != self.apple.y) {
         self.snake.pop_back();

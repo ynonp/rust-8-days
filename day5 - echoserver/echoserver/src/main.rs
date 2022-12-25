@@ -2,18 +2,6 @@ use std::io::{Write, BufReader, BufRead, BufWriter};
 use std::net::TcpListener;
 use std::thread;
 
-/*
-// Bonus: with macro
-macro_rules! unwrap_or_return {
-    ( $e:expr ) => {
-        match $e {
-            Ok(x) => x,
-            Err(_) => return,
-        }
-    }
-}
- */
-
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:9123").unwrap();
     println!("listening started, ready to accept");
@@ -35,7 +23,8 @@ fn main() {
                     Err(_) => return,
                 };
     
-                let output = format!("You Said: {}", &line);                
+                let output = format!("You Said: {}", &line);
+                
                 if let Err(_) = writer.write(output.as_bytes()) {
                     return;
                 }

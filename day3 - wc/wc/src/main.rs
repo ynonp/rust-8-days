@@ -13,7 +13,7 @@ fn main() {
     let mut char_count: usize = 0;
     let mut words_count: usize = 0;
 
-    for line in reader.lines() {
+    for line in reader.lines() {        
         let the_line = line.unwrap();
         line_count += 1;
         words_count += the_line.split_whitespace().count();

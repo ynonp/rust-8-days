@@ -1,14 +1,11 @@
 use cursive::{
-    event::{Event, EventResult, MouseButton, MouseEvent, Key},
-    theme::{BaseColor, Color, ColorStyle},
-    view::{CannotFocus, Nameable},
-    views::{Button, Dialog, LinearLayout, Panel, SelectView},
-    Cursive, Printer, Vec2,
+    event::{Event, EventResult, Key},    
+    view::{Nameable},    
+    Printer, Vec2,
 };
-use game::{Game, Direction};
-use std::{thread, ops::BitOrAssign};
+use game::{Direction};
+use std::{thread};
 use std::time::Duration;
-use std::sync::mpsc;
 mod game;
 
 struct GameView {
@@ -37,7 +34,6 @@ impl cursive::view::View for GameView {
             Direction::Down => "V",
             Direction::Left => "<",
             Direction::Right => ">",
-            _ => "X"
         });
         for snake_pos in self.board.snake.iter().skip(1) {
             printer.print(snake_pos, "X");
@@ -75,6 +71,13 @@ fn main() {
 
     let game = GameView::new();
     let tx = siv.cb_sink().clone();
+
+    thread::spawn(|| {
+        loop {
+            thread::sleep(Duration::from_millis(500));
+            game.step();
+        }        
+    });
 
     thread::spawn(move || {
         // game.board.step(Direction::Up);
