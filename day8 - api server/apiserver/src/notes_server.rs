@@ -1,40 +1,3 @@
-use serde::{Deserialize, Serialize};
-
-#[derive(Deserialize, Serialize)]
-struct Sum2QueryParams {
-    a: u32,
-    b: u32,
-}
-
-/*
-* Part 1 - Basic usage, url path parameters, sending strings, query string params
-*/
-
-/*
-#[tokio::main]
-async fn main() {
-    // GET /hello/warp => 200 OK with body "Hello, warp!"  
-    let _hello = warp::path!("hello" / String)
-        .map(|name| format!("Hello, {}!", name));
-
-    let _sum = warp::path!("sum" / u32 / u32)
-        .map(|a, b| format!("{}", a + b));
-
-    let _sum2 = warp::path!("sum2")
-        .and(warp::query::<Sum2QueryParams>())
-        .map(|params: Sum2QueryParams| format!("{}", params.a + params.b));
-
-    let api = 
-        _hello
-        .or(_sum)
-        .or(_sum2);
-
-    warp::serve(api)
-        .run(([127, 0, 0, 1], 3030))
-        .await;
-}
- */
-
 mod db {
     use serde::{Deserialize, Serialize};
     use std::sync::Arc;
@@ -109,26 +72,6 @@ mod api {
 #[tokio::main]
 async fn main() {
     let notes = db::init();
-
-    /*
-
-    let n1 = notes.clone();
-    let n2 = notes.clone();
-
-    let api = 
-    warp::path!("notes")
-        .and(warp::get())    
-        .and(warp::any().map(move || n1.clone()))
-        .and_then(handlers::list_notes)
-    .or(
-        warp::path!("notes")
-        .and(warp::post())
-        .and(warp::body::content_length_limit(1024 * 16).and(warp::body::json()))
-        .and(warp::any().map(move || n2.clone()))
-        .and_then(handlers::create_note)
-    );
-     */
-
     let api = api::routes(notes);
 
     warp::serve(api)

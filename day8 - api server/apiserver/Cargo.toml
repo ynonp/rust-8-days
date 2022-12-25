@@ -1,3 +1,12 @@
+[[bin]]
+name = "helloworld"
+path = "src/simple_server.rs"
+
+[[bin]]
+name = "notes"
+path = "src/notes_server.rs"
+
+
 [package]
 name = "apiserver"
 version = "0.1.0"
